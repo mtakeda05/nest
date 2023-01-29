@@ -34,4 +34,8 @@ export class OwnerService {
   async findOne(id: string) {
     return await this.ownerRepository.findOne(id);
   }
+
+  async clean() {
+    return await this.ownerRepository.clean();
+  }
 }

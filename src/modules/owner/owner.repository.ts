@@ -4,6 +4,7 @@ import mongoose, { Model } from 'mongoose';
 import { CreateOwnerDto } from './dto/create-owner.dto';
 import { UpdateOwnerDto } from './dto/update-owner.dto';
 import { Owner } from './interfaces/owner.interface';
+import { isTest } from '../../shared/utils';
 
 @Injectable()
 export class OwnerRepository {
@@ -29,10 +30,16 @@ export class OwnerRepository {
   }
 
   async update(ownerDto: UpdateOwnerDto) {
-    return await this.ownerModel.findByIdAndUpdate(ownerDto, { new: true }).exec();
+    return await this.ownerModel.findOneAndUpdate({id: ownerDto.id}, ownerDto, { new: true }).exec();
   }
 
   async delete(id: string) {
     return await this.ownerModel.findOneAndDelete({id}).exec();
+  }
+
+  async clean() {
+    if (isTest()) {
+      return await this.ownerModel.deleteMany({}).exec();
+    }
   }
 }

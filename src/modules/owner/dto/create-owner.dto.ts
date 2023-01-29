@@ -1,4 +1,5 @@
 import { IsString, IsEmail, IsNotEmpty, IsArray } from 'class-validator';
+import * as mongodb from 'mongodb';
 
 export class CreateOwnerDto {
   @IsString()
@@ -13,5 +14,5 @@ export class CreateOwnerDto {
   email: string;
 
   @IsArray()
-  customers: string[];
+  customers: mongodb.ObjectId[];
 }
